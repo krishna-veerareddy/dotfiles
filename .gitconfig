@@ -1,0 +1,58 @@
+[core]
+    autocrlf = false
+    editor = vim
+
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+    interactive = auto
+    ui = true
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+
+[color "status"]
+    added = green
+    changed = yellow
+    untracked = cyan
+
+[branch]
+    autosetupmerge = true
+
+[push]
+    default = current
+
+[url "https://"]
+    insteadOf = git://
+
+[alias]
+    l = "log --no-merges"
+    lgm = "log --format='%Cred%h%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset%C(yellow)%d%Creset'"
+    lg = "log --format='%Cred%h%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset%C(yellow)%d%Creset' --no-merges"
+    lgp = "log -p"
+    st = status
+    ci = commit
+    br = branch
+    mkbr = checkout -b
+    rmbr = branch -D
+    co = checkout
+    df = diff -w -b
+    mg = merge --no-ff
+    mvtag = "!f() { git tag -d $1 && git push origin :refs/tags/$1 && git tag $1 && git push --tags; }; f"
+    sdiff = !git diff && git submodule foreach 'git diff'
+    spush = push --recurse-submodules=on-demand
+    supdate = submodule update --remote --merge
+    sf = submodule foreach
+    sfe = "!f() { echo \"Entering '`pwd`'\"; $@ && git sf $@; }; f"
+
+[http]
+    postBuffer = 1048576000
