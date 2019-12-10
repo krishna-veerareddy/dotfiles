@@ -19,20 +19,33 @@ set_color() {
 }
 
 git_status() {
-	local status_porcelain
-	if status_porcelain=$(git status --porcelain 2> /dev/null)
+	local repo_info exit_code branch inside_worktree
+
+	repo_info="$(git rev-parse --is-inside-work-tree --abbrev-ref HEAD 2>/dev/null)"
+	exit_code="$?"
+
+	if [ -z "$repo_info" ] || [ $exit_code -ne 0 ]
 	then
-		# Get git branch status
-		local branch
-		printf "${bold}${yellow}"
-		if branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
+		return 0
+	fi
+
+	# Get branch name
+	branch="${repo_info##*$'\n'}"
+	repo_info="${repo_info%$'\n'*}"
+
+	# Check whether we are inside the worktree
+	inside_worktree="${repo_info##*$'\n'}"
+	repo_info="${repo_info%$'\n'*}"
+
+	if [[ "$inside_worktree" == "true" ]]
+	then
+		printf "${bold}"
+
+		if [[ "$branch" == "HEAD" ]]
 		then
-			if [[ "$branch" == "HEAD" ]]
-			then
-				printf "${red} in ↗ detached HEAD state"
-			else
-				printf " on ⎇  $branch"
-			fi
+			printf "${red} in ↗ detached HEAD state"
+		else
+			printf "${yellow} on ⎇  $branch"
 		fi
 
 		printf " ["
