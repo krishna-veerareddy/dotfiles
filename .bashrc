@@ -51,13 +51,13 @@ git_status() {
 		printf " ["
 
 		# Check for uncommitted changes
-		if ! $(git diff --quiet --ignore-submodules --cached)
+		if ! $(git diff-index --quiet --ignore-submodules --no-ext-diff --cached HEAD)
 		then
 			printf "+"
 		fi
 
 		# Check for unstaged changes
-		if ! $(git diff-files --quiet --ignore-submodules --)
+		if ! $(git diff-files --quiet --ignore-submodules --no-ext-diff --)
 		then
 			printf "!"
 		fi
