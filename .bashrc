@@ -87,7 +87,7 @@ alias ...="cd ../.."
 alias .4="cd ../../.."
 alias .5="cd ../../../.."
 
-if [ -x trash ]
+if trash_path=$(type -P "trash") && [ -x $trash_path ]
 then
 	alias rm="trash"
 fi
