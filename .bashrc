@@ -96,5 +96,12 @@ fi
 set_color
 export PROMPT_COMMAND='PS1="${bold}${green}\u${normal}:${bold}${blue}\w${normal}$(git_status)\n$ "'
 
+# History
+shopt -s cmdhist
+shopt -s histappend
+
 # Environment variables
 export EDITOR="vim"
+export HISTCONTROL=ignorespace:ignoredups:erasedups
+export HISTSIZE=10000
+export HISTFILESIZE=20000
