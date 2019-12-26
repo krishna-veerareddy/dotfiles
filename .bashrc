@@ -103,5 +103,6 @@ shopt -s histappend
 # Environment variables
 export EDITOR="vim"
 export HISTCONTROL=ignorespace:ignoredups:erasedups
+export HISTIGNORE=ls:exit:pwd:clear
 export HISTSIZE=10000
 export HISTFILESIZE=20000
