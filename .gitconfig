@@ -42,6 +42,8 @@
     st = status
     ci = commit
     br = branch
+    rb = rebase
+    rbi = rebase --interactive
     mkbr = checkout -b
     rmbr = branch -D
     co = checkout
