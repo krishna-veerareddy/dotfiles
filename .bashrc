@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Utility functions
-set_color() {
+__set_color() {
 	# Colorize output if and only if output is connected to a tty and the tty supports colors
 	if [ -t 1 ]
 	then
@@ -18,7 +18,7 @@ set_color() {
 	fi
 }
 
-git_status() {
+__git_status() {
 	local repo_info exit_code branch inside_worktree
 
 	repo_info="$(git rev-parse --is-inside-work-tree --abbrev-ref HEAD 2>/dev/null)"
@@ -93,8 +93,8 @@ then
 fi
 
 # Command line
-set_color
-export PROMPT_COMMAND='PS1="${bold}${green}\u${normal}:${bold}${blue}\w${normal}$(git_status)\n$ "'
+__set_color
+export PROMPT_COMMAND='PS1="${bold}${green}\u${normal}:${bold}${blue}\w${normal}$(__git_status)\n$ "'
 
 # History
 shopt -s cmdhist
