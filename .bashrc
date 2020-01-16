@@ -108,4 +108,4 @@ export HISTSIZE=10000
 export HISTFILESIZE=20000
 
 # Miscellaneous
-bind -f .inputrc
+bind -f "$(dirname ${BASH_SOURCE[0]})/.inputrc"
