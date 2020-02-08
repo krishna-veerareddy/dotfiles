@@ -6,6 +6,7 @@ set ignorecase
 set incsearch	
 set ruler
 
+set backspace=indent,eol,start
 set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 set mouse-=a
 set textwidth=90
