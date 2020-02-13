@@ -78,6 +78,11 @@ __git_status() {
 	fi
 }
 
+mkcd() {
+	mkdir -p $1
+	cd $1
+}
+
 # Aliases
 alias hgrep="history | grep"
 alias gti="git"
