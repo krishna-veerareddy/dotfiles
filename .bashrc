@@ -19,12 +19,11 @@ __set_color() {
 }
 
 __git_status() {
-	local repo_info exit_code branch inside_worktree
+	local repo_info branch inside_worktree
 
 	repo_info="$(git rev-parse --is-inside-work-tree --abbrev-ref HEAD 2>/dev/null)"
-	exit_code="$?"
 
-	if [ -z "$repo_info" ] || [ $exit_code -ne 0 ]
+	if [ $? -ne 0 ] || [ -z "$repo_info" ]
 	then
 		return 0
 	fi
@@ -39,12 +38,15 @@ __git_status() {
 
 	if [[ "$inside_worktree" == "true" ]]
 	then
+		local upstream
 		printf "${bold}"
 
 		if [[ "$branch" == "HEAD" ]]
 		then
 			printf "${red} in ↗ detached HEAD state"
 		else
+			upstream="$(git rev-parse --abbrev-ref @{u} 2> /dev/null)"
+
 			printf "${yellow} on ⎇  $branch"
 		fi
 
@@ -57,7 +59,7 @@ __git_status() {
 		fi
 
 		# Check for unstaged changes
-		if ! $(git diff-files --quiet --ignore-submodules --no-ext-diff --)
+		if ! $(git diff-files --quiet --ignore-submodules --no-ext-diff)
 		then
 			printf "!"
 		fi
@@ -72,6 +74,20 @@ __git_status() {
 		if $(git rev-parse --verify refs/stash &>/dev/null)
 		then
 			printf "$"
+		fi
+
+		if [ -n "$upstream" ]
+		then
+			case "$(git rev-list --count --left-right origin/master...HEAD 2> /dev/null)" in
+				# No upstream or local branch is in-sync with remote
+				"" | "0	0") printf "" ;;
+				# Local branch is ahead of remote
+				"0	"*) printf "⇡" ;;
+				# Local branch is behind remote
+				*"	0") printf "⇣" ;;
+				# Local branch diverges from remote
+				*) printf "<>" ;;
+			esac
 		fi
 
 		printf "]${normal}"
