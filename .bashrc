@@ -82,11 +82,11 @@ __git_status() {
 				# No upstream or local branch is in-sync with remote
 				"" | "0	0") printf "" ;;
 				# Local branch is ahead of remote
-				"0	"*) printf "⇡" ;;
+				"0	"*) printf "↑" ;;
 				# Local branch is behind remote
-				*"	0") printf "⇣" ;;
+				*"	0") printf "↓" ;;
 				# Local branch diverges from remote
-				*) printf "<>" ;;
+				*) printf "Y" ;;
 			esac
 		fi
 
