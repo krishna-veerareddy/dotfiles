@@ -25,6 +25,9 @@
     changed = yellow
     untracked = cyan
 
+[diff]
+    algorithm = patience
+
 [branch]
     autosetupmerge = true
 
