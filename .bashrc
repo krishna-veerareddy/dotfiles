@@ -59,7 +59,7 @@ __git_status() {
 		fi
 
 		# Check for unstaged changes
-		if ! $(git diff-files --quiet --ignore-submodules --no-ext-diff)
+		if ! $(git diff --quiet --ignore-submodules --no-ext-diff)
 		then
 			printf "!"
 		fi
