@@ -78,7 +78,7 @@ __git_status() {
 
 		if [ -n "$upstream" ]
 		then
-			case "$(git rev-list --count --left-right origin/master...HEAD 2> /dev/null)" in
+			case "$(git rev-list --count --left-right origin/${upstream}...HEAD 2> /dev/null)" in
 				# No upstream or local branch is in-sync with remote
 				"" | "0	0") printf "" ;;
 				# Local branch is ahead of remote
