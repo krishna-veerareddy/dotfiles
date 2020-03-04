@@ -38,15 +38,12 @@ __git_status() {
 
 	if [[ "$inside_worktree" == "true" ]]
 	then
-		local upstream
 		printf "${bold}"
 
 		if [[ "$branch" == "HEAD" ]]
 		then
 			printf "${red} in ↗ detached HEAD state"
 		else
-			upstream="$(git rev-parse --abbrev-ref @{u} 2> /dev/null)"
-
 			printf "${yellow} on ⎇  $branch"
 		fi
 
@@ -76,19 +73,16 @@ __git_status() {
 			printf "$"
 		fi
 
-		if [ -n "$upstream" ]
-		then
-			case "$(git rev-list --count --left-right origin/${upstream}...HEAD 2> /dev/null)" in
-				# No upstream or local branch is in-sync with remote
-				"" | "0	0") printf "" ;;
-				# Local branch is ahead of remote
-				"0	"*) printf "↑" ;;
-				# Local branch is behind remote
-				*"	0") printf "↓" ;;
-				# Local branch diverges from remote
-				*) printf "Y" ;;
-			esac
-		fi
+        case "$(git rev-list --count --left-right "@{upstream}"...HEAD 2> /dev/null)" in
+			# No upstream or local branch is in-sync with remote
+			"" | "0	0") printf "" ;;
+			# Local branch is ahead of remote
+			"0	"*) printf "↑" ;;
+			# Local branch is behind remote
+			*"	0") printf "↓" ;;
+			# Local branch diverges from remote
+			*) printf "Y" ;;
+        esac
 
 		printf "]${normal}"
 	fi
